@@ -16,6 +16,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
+      initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -28,7 +29,7 @@ class Wrapper extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(children: [welcomepage, mainpage, settingspage],),
+        body: TabBarView(children: [welcomepage, mainpage, settingspage]),
       ),
     );
   }

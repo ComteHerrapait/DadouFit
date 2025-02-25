@@ -8,7 +8,14 @@ class WelcomePage extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[const Text('Welcome to DadouFit')],
+        children: [
+          const Text("Welcome, Fit Boy !", textScaler: TextScaler.linear(2)),
+          const Center(
+            child: Image(
+              image: AssetImage('assets/images/ai_generated/happy_user_2.png'),
+            ),
+          ),
+        ],
       ),
     );
   }
