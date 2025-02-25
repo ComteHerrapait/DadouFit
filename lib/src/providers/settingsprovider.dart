@@ -33,7 +33,8 @@ class ThemeProvider extends ChangeNotifier {
   ThemeData theme() {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        brightness: themeMode  == ThemeMode.dark ? Brightness.dark : Brightness.light,
+        brightness:
+            themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light,
         seedColor: const Color.fromARGB(125, 255, 50, 255),
       ),
     );

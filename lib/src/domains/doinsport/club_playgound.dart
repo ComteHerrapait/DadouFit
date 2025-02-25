@@ -1,4 +1,3 @@
-
 class ClubPlaygound {
   final String id;
   final String name;
@@ -17,5 +16,4 @@ class ClubPlaygound {
       _ => throw const FormatException('Failed to load album.'),
     };
   }
-  
 }

@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
         future: futureApiResult,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final playgrounds = snapshot.data!.data; 
+            final playgrounds = snapshot.data!.data;
             return ListView.builder(
               itemCount: snapshot.data!.totalItems,
               itemBuilder: (context, index) {
