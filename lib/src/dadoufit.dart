@@ -1,28 +1,33 @@
+import 'package:dadoufit/src/pages/mainpage.dart';
 import 'package:dadoufit/src/pages/settingspage.dart';
 import 'package:dadoufit/src/pages/welcomepage.dart';
-import 'package:dadoufit/src/pages/mainpage.dart';
 import 'package:dadoufit/src/pages/wrapper.dart';
+import 'package:dadoufit/src/providers/themeprovider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DadouFitApp extends StatelessWidget {
   const DadouFitApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: MaterialApp(
-        title: 'DadouFit',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(125, 255, 50, 255),
-          ),
-        ),
-        home: const Wrapper(
-          welcomepage: WelcomePage(),
-          mainpage: MainPage(),
-          settingspage: SettingsPage(),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => ThemeProvider())],
+      child: DefaultTabController(
+        length: 3,
+        child: Builder(
+          builder: (context) {
+            final themeProvider = Provider.of<ThemeProvider>(context);
+            return MaterialApp(
+              title: 'DadouFit',
+              theme: themeProvider.theme(),
+              home: const Wrapper(
+                welcomepage: WelcomePage(),
+                mainpage: MainPage(),
+                settingspage: SettingsPage(),
+              ),
+            );
+          },
         ),
       ),
     );
