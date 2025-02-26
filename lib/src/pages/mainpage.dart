@@ -1,6 +1,8 @@
 import 'package:dadoufit/src/apis/doinsport.dart';
 import 'package:dadoufit/src/domains/doinsport/api_response_wrapper.dart';
 import 'package:dadoufit/src/domains/doinsport/club_playgound.dart';
+import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
+import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -16,7 +18,11 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    futureApiResult = getPlaygrounds();
+    futureApiResult = getPlaygrounds(
+      DateTime.now(),
+      EnumClub.pommeraie,
+      EnumActivity.padel,
+    );
   }
 
   @override
@@ -32,7 +38,12 @@ class _MainPageState extends State<MainPage> {
               itemBuilder: (context, index) {
                 final playground = playgrounds[index];
 
-                return Text(playground.name);
+                return ListTile(
+                  dense: true,
+                  leading: Text("Terrain"),
+                  title: Text(playground.name),
+                  trailing: Icon(Icons.sports_tennis),
+                );
               },
             );
           } else if (snapshot.hasError) {

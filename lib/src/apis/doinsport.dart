@@ -2,28 +2,34 @@ import 'dart:convert';
 
 import 'package:dadoufit/src/domains/doinsport/api_response_wrapper.dart';
 import 'package:dadoufit/src/domains/doinsport/club_playgound.dart';
+import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
+import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
-Future<Map<String, dynamic>> proofOfConcept() async {
-  final response = await http.get(
-    Uri.parse(
-      'https://api-v3.doinsport.club/clubs/playgrounds/plannings/2025-02-27?club.id=0e5db60e-1735-4f5e-92f4-b457ac72f912&from=20:00:00&to=23:59:59&activities.id=ce8c306e-224a-4f24-aa9d-6500580924dc&bookingType=unique',
-    ),
+const String hostDoinsportV3 = "api-v3.doinsport.club";
+
+Future<ApiResponseWrapper<ClubPlaygound>> getPlaygrounds(
+  DateTime date,
+  EnumClub club,
+  EnumActivity activity,
+) async {
+  String dateStr = DateFormat('yyyy-MM-dd').format(date);
+  final uri = Uri(
+    scheme: 'https',
+    host: hostDoinsportV3,
+    path: '/clubs/playgrounds/plannings/$dateStr',
+    queryParameters: {
+      'club.id': club.id,
+      'from': '00:00:00',
+      'to': '23:59:59',
+      'activities.id': activity.id,
+      'bookingType': 'unique',
+    },
   );
 
-  if (response.statusCode == 200) {
-    return jsonDecode(response.body) as Map<String, dynamic>;
-  } else {
-    throw Exception('Failed to load album');
-  }
-}
+  final response = await http.get(uri);
 
-Future<ApiResponseWrapper<ClubPlaygound>> getPlaygrounds() async {
-  final response = await http.get(
-    Uri.parse(
-      'https://api-v3.doinsport.club/clubs/playgrounds/plannings/2025-02-27?club.id=0e5db60e-1735-4f5e-92f4-b457ac72f912&from=20:00:00&to=23:59:59&activities.id=ce8c306e-224a-4f24-aa9d-6500580924dc&bookingType=unique',
-    ),
-  );
   final json = jsonDecode(response.body) as Map<String, dynamic>;
   if (response.statusCode == 200) {
     return ApiResponseWrapper.fromJson(json, ClubPlaygound.fromJson);
