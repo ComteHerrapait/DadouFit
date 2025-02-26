@@ -5,12 +5,16 @@ class ClubPlaygound {
   final String name;
   final bool indoor;
   final List<Activity> activities;
+  final String openingTime;
+  final String closingTime;
 
   const ClubPlaygound({
     required this.id,
     required this.name,
     required this.indoor,
     required this.activities,
+    required this.openingTime,
+    required this.closingTime,
   });
 
   factory ClubPlaygound.fromJson(Map<String, dynamic> json) {
@@ -23,6 +27,8 @@ class ClubPlaygound {
       name: json['name'],
       indoor: json['indoor'],
       activities: activities,
+      openingTime: json['timetables']['startAt'],
+      closingTime: json['timetables']['endAt'],
     );
   }
 }

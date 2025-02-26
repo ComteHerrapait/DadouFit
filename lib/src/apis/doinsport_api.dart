@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 
 const String hostDoinsportV3 = "api-v3.doinsport.club";
 
-Future<ApiResponseWrapper<ClubPlaygound>> getPlaygrounds(
+Future<ApiResponseWrapper<ClubPlaygound>> getPlaygroundPlannings(
   DateTime date,
   EnumClub club,
   EnumActivity activity,
