@@ -3,6 +3,7 @@ import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
 import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
 import 'package:dadoufit/src/domains/generic_slot.dart';
 import 'package:dadoufit/src/mappers/doinsport_mapper.dart';
+import 'package:dadoufit/src/widgets/slot_list.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -39,34 +40,55 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder(
-        future: futureGenericSlots,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final List<GenericSlot> data = snapshot.data!;
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            DropdownMenu<EnumClub>(
+              initialSelection: EnumClub.pommeraie,
+              dropdownMenuEntries:
+                  EnumClub.values
+                      .map(
+                        (EnumClub club) => DropdownMenuEntry<EnumClub>(
+                          value: club,
+                          label: club.name,
+                        ),
+                      )
+                      .toList(),
+            ),
+            DropdownMenu<EnumActivity>(
+              initialSelection: EnumActivity.padel,
+              dropdownMenuEntries:
+                  EnumActivity.values
+                      .map(
+                        (EnumActivity activity) =>
+                            DropdownMenuEntry<EnumActivity>(
+                              value: activity,
+                              label: activity.name,
+                            ),
+                      )
+                      .toList(),
+            ),
+          ],
+        ),
+        Divider(),
+        Expanded(
+          child: FutureBuilder(
+            future: futureGenericSlots,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final List<GenericSlot> data = snapshot.data!;
 
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                final slot = data[index];
-
-                return ListTile(
-                  dense: true,
-                  leading: Text(slot.playgroundName),
-                  title: Text(slot.toString()),
-                  trailing: Icon(
-                    slot.bookable ? Icons.event_available : Icons.event_busy,
-                  ),
-                );
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Text('HTTP request KO :  ${snapshot.error}');
-          }
-          return const CircularProgressIndicator();
-        },
-      ),
+                return SlotList(slots: data);
+              } else if (snapshot.hasError) {
+                return Text('HTTP request KO :  ${snapshot.error}');
+              }
+              return Center(child: const CircularProgressIndicator());
+            },
+          ),
+        ),
+      ],
     );
   }
 }

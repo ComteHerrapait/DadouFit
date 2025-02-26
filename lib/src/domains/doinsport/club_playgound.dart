@@ -1,6 +1,6 @@
 import 'package:dadoufit/src/domains/doinsport/activity.dart';
 
-class ClubPlaygound {
+class ClubPlayground {
   final String id;
   final String name;
   final bool indoor;
@@ -8,7 +8,7 @@ class ClubPlaygound {
   final String openingTime;
   final String closingTime;
 
-  const ClubPlaygound({
+  const ClubPlayground({
     required this.id,
     required this.name,
     required this.indoor,
@@ -17,12 +17,12 @@ class ClubPlaygound {
     required this.closingTime,
   });
 
-  factory ClubPlaygound.fromJson(Map<String, dynamic> json) {
+  factory ClubPlayground.fromJson(Map<String, dynamic> json) {
     final rawActivities = json['activities'] as List;
     List<Activity> activities =
         rawActivities.map((item) => Activity.fromJson(item)).toList();
 
-    return ClubPlaygound(
+    return ClubPlayground(
       id: json['id'],
       name: json['name'],
       indoor: json['indoor'],

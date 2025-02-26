@@ -6,12 +6,12 @@ import 'package:dadoufit/src/domains/generic_slot.dart';
 import 'package:flutter/material.dart';
 
 List<GenericSlot> mapToGenericSlots(
-  ApiResponseWrapper<ClubPlaygound> doinsportApiResponse,
+  ApiResponseWrapper<ClubPlayground> doinsportApiResponse,
   EnumClub clubEnum,
   EnumActivity activityEnum,
   DateTime day,
 ) {
-  final List<ClubPlaygound> playgrounds = doinsportApiResponse.data;
+  final List<ClubPlayground> playgrounds = doinsportApiResponse.data;
   List<GenericSlot> genericSlots = [];
   final DateTime dateOnly = DateUtils.dateOnly(day);
 

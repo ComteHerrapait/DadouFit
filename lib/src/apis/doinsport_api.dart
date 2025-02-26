@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dadoufit/src/domains/doinsport/api_response_wrapper.dart';
+import 'package:dadoufit/src/domains/doinsport/club.dart';
 import 'package:dadoufit/src/domains/doinsport/club_playgound.dart';
 import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
 import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
@@ -9,7 +10,7 @@ import 'package:intl/intl.dart';
 
 const String hostDoinsportV3 = "api-v3.doinsport.club";
 
-Future<ApiResponseWrapper<ClubPlaygound>> getPlaygroundPlannings(
+Future<ApiResponseWrapper<ClubPlayground>> getPlaygroundPlannings(
   DateTime date,
   EnumClub club,
   EnumActivity activity,
@@ -30,9 +31,26 @@ Future<ApiResponseWrapper<ClubPlaygound>> getPlaygroundPlannings(
 
   final response = await http.get(uri);
 
-  final json = jsonDecode(response.body) as Map<String, dynamic>;
   if (response.statusCode == 200) {
-    return ApiResponseWrapper.fromJson(json, ClubPlaygound.fromJson);
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    return ApiResponseWrapper.fromJson(json, ClubPlayground.fromJson);
+  } else {
+    throw Exception('Failed to load club playgrounds');
+  }
+}
+
+Future<ApiResponseWrapper<Club>> getClub(EnumClub club) async {
+  final uri = Uri(
+    scheme: 'https',
+    host: hostDoinsportV3,
+    path: '/clubs/${club.id}',
+  );
+
+  final response = await http.get(uri);
+
+  if (response.statusCode == 200) {
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    return ApiResponseWrapper.fromJson(json, Club.fromJson);
   } else {
     throw Exception('Failed to load club playgrounds');
   }
