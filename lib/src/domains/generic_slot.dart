@@ -26,6 +26,6 @@ class GenericSlot {
 
   @override
   String toString() {
-    return "${DateFormat('jms').format(startTime)} (${duration.inMinutes} min)";
+    return "${DateFormat('E d H:m').format(startTime)} (${duration.inMinutes} min)";
   }
 }

@@ -8,7 +8,7 @@ class SlotList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (slots == null || slots.length == 0) {
+    if (slots == null || slots.isEmpty) {
       return Text("Error, data is shitty");
     }
     return ListView.builder(

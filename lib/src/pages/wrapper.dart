@@ -19,6 +19,7 @@ class Wrapper extends StatelessWidget {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 20.0,
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("DadouFit"),
           bottom: const TabBar(
