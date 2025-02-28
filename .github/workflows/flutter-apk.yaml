@@ -64,7 +64,7 @@ jobs:
         name: dadoufit-release.apk  # Name of the uploaded artifact
         path: ./artifacts   # Destination directory
     
-    - name: List downloaded files
+    - name: DEBUG List downloaded files
       run: ls -R ./artifacts
 
     - name: Release
@@ -73,4 +73,4 @@ jobs:
         name: Release ${{ env.APP_VERSION }}
         tag_name: v${{ env.APP_VERSION }}
         files: |
-          ./artifacts/dadoufit-release.apk
+          ./artifacts/app-release.apk
