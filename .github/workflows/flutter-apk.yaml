@@ -58,9 +58,19 @@ jobs:
         version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
         echo "APP_VERSION=$version" >> $GITHUB_ENV
 
+    - name: Download Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: dadoufit-release.apk  # Name of the uploaded artifact
+        path: ./artifacts   # Destination directory
+    
+    - name: List downloaded files
+      run: ls -R ./artifacts
+
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
         name: Release ${{ env.APP_VERSION }}
         tag_name: v${{ env.APP_VERSION }}
-        files: build/app/outputs/apk/release/app-release.apk
+        files: |
+          ./artifacts/dadoufit-release.apk
