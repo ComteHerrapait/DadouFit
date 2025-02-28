@@ -46,16 +46,16 @@ jobs:
         name: release
         path: build/app/outputs/apk/release/app-release.apk
 
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+
     - name: Extract version from pubspec.yaml
       id: extract_version
       run: |
         version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
         echo "APP_VERSION=$version" >> $GITHUB_ENV
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
 
     - name: Create release
       id: create_release
@@ -63,7 +63,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.APP_VERSION }}
+        tag_name: v${{ env.APP_VERSION }}
         release_name: Release ${{ env.APP_VERSION }}
         draft: false
         prerelease: false
