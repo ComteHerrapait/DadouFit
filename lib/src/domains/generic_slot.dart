@@ -1,31 +1,34 @@
-import 'package:flutter/material.dart';
+import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
+import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
 import 'package:intl/intl.dart';
 
 class GenericSlot {
-  final bool bookable;
-  final Duration duration;
   final DateTime startTime;
-  final String playgroundName;
-  final String clubName;
-  final String activityName;
-
-  // TODO : add more informations (if needed)
+  final EnumClub club;
+  final EnumActivity activity;
+  final List<SlotPlayground> playgrounds;
 
   GenericSlot({
-    required this.bookable,
-    required this.duration,
     required this.startTime,
-    required this.playgroundName,
-    required this.clubName,
-    required this.activityName,
+    required this.club,
+    required this.activity,
+    required this.playgrounds,
   });
 
-  DateTimeRange get time {
-    return DateTimeRange(start: startTime, end: startTime.add(duration));
-  }
+  String get date => DateFormat('E d H:m').format(startTime);
+  String get time => DateFormat('H:m').format(startTime);
+  String get activityName => activity.name;
+  String get clubName => club.name;
+}
 
-  @override
-  String toString() {
-    return "${DateFormat('E d H:m').format(startTime)} (${duration.inMinutes} min)";
-  }
+class SlotPlayground {
+  final bool bookable;
+  final Duration duration;
+  final String playgroundName;
+
+  SlotPlayground({
+    required this.bookable,
+    required this.duration,
+    required this.playgroundName,
+  });
 }

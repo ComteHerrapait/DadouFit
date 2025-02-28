@@ -33,7 +33,7 @@ class MainPageContent extends StatelessWidget {
         Divider(),
         Expanded(
           child: FutureBuilder(
-            future: plannings.data,
+            future: plannings.planningsFuture(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final List<GenericSlot> data = snapshot.data!;
@@ -63,11 +63,11 @@ class PlanningSelectors extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Wrap(
+            direction: Axis.horizontal,
             children: [
               DropdownMenu<EnumClub>(
-                initialSelection: EnumClub.pommeraie,
+                initialSelection: planningProvider.selectedClub,
                 dropdownMenuEntries:
                     EnumClub.values
                         .map(
@@ -92,6 +92,20 @@ class PlanningSelectors extends StatelessWidget {
                         )
                         .toList(),
                 onSelected: planningProvider.selectActivity,
+              ),
+              DropdownMenu<Duration>(
+                dropdownMenuEntries: [
+                  DropdownMenuEntry(
+                    value: Duration(minutes: 60),
+                    label: "60 min",
+                  ),
+                  DropdownMenuEntry(
+                    value: Duration(minutes: 90),
+                    label: "90 min",
+                  ),
+                ],
+                onSelected: planningProvider.selectDuration,
+                initialSelection: planningProvider.selectedDuration,
               ),
             ],
           ),

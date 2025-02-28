@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:dadoufit/src/apis/doinsport_api.dart';
+import 'package:dadoufit/src/domains/doinsport/api_response_wrapper.dart';
+import 'package:dadoufit/src/domains/doinsport/club_playgound.dart';
 import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
 import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
 import 'package:dadoufit/src/domains/generic_slot.dart';
@@ -8,16 +12,29 @@ import 'package:flutter/material.dart';
 class PlanningProvider extends ChangeNotifier {
   EnumClub selectedClub = EnumClub.pommeraie;
   EnumActivity selectedActivity = EnumActivity.padel;
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().add(
+    Duration(days: 1),
+  ); // TODO : temp, remove this
+  Duration selectedDuration = Duration(minutes: 60);
 
-  late Future<List<GenericSlot>> data;
+  late Future<ApiResponseWrapper<ClubPlayground>> _rawData;
 
-  Future<List<GenericSlot>> getPlannings() {
-    return data;
+  Future<List<GenericSlot>> planningsFuture() {
+    return _rawData.then(
+      (apiResponse) => Future.value(
+        mapToGenericSlots(
+          apiResponse,
+          selectedClub,
+          selectedActivity,
+          selectedDate,
+          selectedDuration,
+        ),
+      ),
+    );
   }
 
   PlanningProvider() {
-    updateSlots();
+    _fetchApiData();
   }
 
   void selectClub(EnumClub? newClub) {
@@ -25,8 +42,8 @@ class PlanningProvider extends ChangeNotifier {
       return;
     }
     selectedClub = newClub;
-    updateSlots();
-    notifyListeners();
+    log("updated selected club to $selectedClub");
+    _fullUpdate();
   }
 
   void selectActivity(EnumActivity? newActivity) {
@@ -34,8 +51,8 @@ class PlanningProvider extends ChangeNotifier {
       return;
     }
     selectedActivity = newActivity;
-    updateSlots();
-    notifyListeners();
+    log("updated selected activity to $selectedActivity");
+    _fullUpdate();
   }
 
   void selectDate(DateTime? newDateTime) {
@@ -43,19 +60,36 @@ class PlanningProvider extends ChangeNotifier {
       return;
     }
     selectedDate = DateUtils.dateOnly(newDateTime);
-    updateSlots();
+    log("updated selected date to $selectedDate");
+    _fullUpdate();
+  }
+
+  void selectDuration(Duration? newDuration) {
+    if (newDuration == null) return;
+
+    selectedDuration = newDuration;
+    log("updated selected duration to ${selectedDuration.inMinutes}min");
+    _softUpdate();
+  }
+
+  void _softUpdate() async {
+    log("PlanningProvider : soft update triggered");
     notifyListeners();
   }
 
-  void updateSlots() async {
-    data = getPlaygroundPlannings(
+  void _fullUpdate() async {
+    log("PlanningProvider : full update triggered");
+    _fetchApiData();
+    notifyListeners();
+  }
+
+  Future<Future<ApiResponseWrapper<ClubPlayground>>> _fetchApiData() async {
+    log("PlanningProvider : fetching data from API");
+    _rawData = getPlaygroundPlannings(
       selectedDate,
       selectedClub,
       selectedActivity,
-    ).then(
-      (value) => Future.value(
-        mapToGenericSlots(value, selectedClub, selectedActivity, selectedDate),
-      ),
     );
+    return _rawData;
   }
 }
