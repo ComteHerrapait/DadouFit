@@ -83,8 +83,7 @@ class _PlanningSelectorsState extends State<PlanningSelectors> {
       subtitle: areFiltersExpanded ? null : Text(planningProvider.selectionStr),
       leading: Icon(Icons.filter_alt),
       initiallyExpanded: areFiltersExpanded,
-      onExpansionChanged:
-          (value) => setState(() => {areFiltersExpanded = value}),
+      onExpansionChanged: (value) => setState(() => areFiltersExpanded = value),
       children: [
         Flex(
           direction: Axis.vertical,

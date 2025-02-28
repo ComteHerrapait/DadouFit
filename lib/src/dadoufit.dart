@@ -12,12 +12,14 @@ class DadouFitApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => ThemeProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => SettingsProvider()),
+      ],
       child: DefaultTabController(
         length: 3,
         child: Builder(
           builder: (context) {
-            final themeProvider = Provider.of<ThemeProvider>(context);
+            final themeProvider = Provider.of<SettingsProvider>(context);
             return MaterialApp(
               title: 'DadouFit',
               theme: themeProvider.theme(),

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ThemeProvider extends ChangeNotifier {
+class SettingsProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.dark;
+  Color color = Color.fromARGB(125, 255, 50, 255);
 
-  bool get isDarkMode => themeMode == ThemeMode.dark;
-  Brightness get brightness =>
-      themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light;
-
-  ThemeProvider() {
+  SettingsProvider() {
     _init();
   }
 
@@ -30,12 +27,19 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeColor(Color newColor) async {
+    color = newColor;
+    notifyListeners();
+  }
+
+  bool get isDarkMode => themeMode == ThemeMode.dark;
+  Brightness get brightness =>
+      themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light;
   ThemeData theme() {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        brightness:
-            themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light,
-        seedColor: const Color.fromARGB(125, 255, 50, 255),
+        brightness: brightness,
+        seedColor: color,
       ),
     );
   }
