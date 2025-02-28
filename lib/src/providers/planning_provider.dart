@@ -8,16 +8,19 @@ import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
 import 'package:dadoufit/src/domains/generic_slot.dart';
 import 'package:dadoufit/src/mappers/doinsport_mapper.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PlanningProvider extends ChangeNotifier {
   EnumClub selectedClub = EnumClub.pommeraie;
   EnumActivity selectedActivity = EnumActivity.padel;
-  DateTime selectedDate = DateTime.now().add(
-    Duration(days: 1),
-  ); // TODO : temp, remove this
+  DateTime selectedDate = DateTime.now();
   Duration selectedDuration = Duration(minutes: 60);
 
   late Future<ApiResponseWrapper<ClubPlayground>> _rawData;
+
+  String get selectedDateStr => DateFormat('EEEE d').format(selectedDate);
+  String get selectionStr =>
+      "${selectedActivity.name} | ${selectedClub.name} | ${selectedDuration.inMinutes}min | $selectedDateStr";
 
   Future<List<GenericSlot>> planningsFuture() {
     return _rawData.then(

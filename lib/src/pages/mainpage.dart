@@ -29,8 +29,7 @@ class MainPageContent extends StatelessWidget {
 
     return Column(
       children: [
-        PlanningSelectors(planningProvider: plannings),
-        Divider(),
+        PlanningSelectors(),
         Expanded(
           child: FutureBuilder(
             future: plannings.planningsFuture(),
@@ -51,72 +50,105 @@ class MainPageContent extends StatelessWidget {
   }
 }
 
-class PlanningSelectors extends StatelessWidget {
-  const PlanningSelectors({super.key, required this.planningProvider});
+class PlanningSelectors extends StatefulWidget {
+  const PlanningSelectors({super.key});
 
-  final PlanningProvider planningProvider;
+  @override
+  State<PlanningSelectors> createState() => _PlanningSelectorsState();
+}
+
+class _PlanningSelectorsState extends State<PlanningSelectors> {
+  bool areFiltersExpanded = false;
+
+  Future<void> _selectDate(
+    BuildContext context,
+    PlanningProvider planningProvider,
+  ) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialEntryMode: DatePickerEntryMode.calendar,
+      initialDate: planningProvider.selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 14)),
+    );
+    planningProvider.selectDate(picked);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: Axis.vertical,
+    final planningProvider = Provider.of<PlanningProvider>(context);
+
+    return ExpansionTile(
+      title: Text("Filters"),
+      subtitle: areFiltersExpanded ? null : Text(planningProvider.selectionStr),
+      leading: Icon(Icons.filter_alt),
+      initiallyExpanded: areFiltersExpanded,
+      onExpansionChanged:
+          (value) => setState(() => {areFiltersExpanded = value}),
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Wrap(
-            direction: Axis.horizontal,
-            children: [
-              DropdownMenu<EnumClub>(
-                initialSelection: planningProvider.selectedClub,
-                dropdownMenuEntries:
-                    EnumClub.values
-                        .map(
-                          (EnumClub club) => DropdownMenuEntry<EnumClub>(
-                            value: club,
-                            label: club.name,
-                          ),
-                        )
-                        .toList(),
-                onSelected: planningProvider.selectClub,
-              ),
-              DropdownMenu<EnumActivity>(
-                initialSelection: EnumActivity.padel,
-                dropdownMenuEntries:
-                    EnumActivity.values
-                        .map(
-                          (EnumActivity activity) =>
-                              DropdownMenuEntry<EnumActivity>(
-                                value: activity,
-                                label: activity.name,
+        Flex(
+          direction: Axis.vertical,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 8.0,
+                runSpacing: 8.0,
+                children: [
+                  DropdownMenu<EnumClub>(
+                    initialSelection: planningProvider.selectedClub,
+                    dropdownMenuEntries:
+                        EnumClub.values
+                            .map(
+                              (EnumClub club) => DropdownMenuEntry<EnumClub>(
+                                value: club,
+                                label: club.name,
                               ),
-                        )
-                        .toList(),
-                onSelected: planningProvider.selectActivity,
-              ),
-              DropdownMenu<Duration>(
-                dropdownMenuEntries: [
-                  DropdownMenuEntry(
-                    value: Duration(minutes: 60),
-                    label: "60 min",
+                            )
+                            .toList(),
+                    onSelected: planningProvider.selectClub,
                   ),
-                  DropdownMenuEntry(
-                    value: Duration(minutes: 90),
-                    label: "90 min",
+                  DropdownMenu<EnumActivity>(
+                    initialSelection: planningProvider.selectedActivity,
+                    dropdownMenuEntries:
+                        EnumActivity.values
+                            .map(
+                              (EnumActivity activity) =>
+                                  DropdownMenuEntry<EnumActivity>(
+                                    value: activity,
+                                    label: activity.name,
+                                  ),
+                            )
+                            .toList(),
+                    onSelected: planningProvider.selectActivity,
+                  ),
+                  DropdownMenu<Duration>(
+                    dropdownMenuEntries: [
+                      DropdownMenuEntry(
+                        value: Duration(minutes: 60),
+                        label: "60 min",
+                      ),
+                      DropdownMenuEntry(
+                        value: Duration(minutes: 90),
+                        label: "90 min",
+                      ),
+                    ],
+                    onSelected: planningProvider.selectDuration,
+                    initialSelection: planningProvider.selectedDuration,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ElevatedButton(
+                      onPressed: () => _selectDate(context, planningProvider),
+                      child: Text(planningProvider.selectedDateStr),
+                    ),
                   ),
                 ],
-                onSelected: planningProvider.selectDuration,
-                initialSelection: planningProvider.selectedDuration,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        // DatePickerDialog(
-        //   initialCalendarMode: DatePickerMode.day,
-        //   initialEntryMode: DatePickerEntryMode.inputOnly,
-        //   initialDate: DateTime.now(),
-        //   firstDate: DateTime.now(),
-        //   lastDate: DateTime.now().add(Duration(days: 14)),
-        // ),
       ],
     );
   }

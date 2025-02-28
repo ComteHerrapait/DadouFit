@@ -16,7 +16,7 @@ class WelcomePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(right: 16),
             child: Align(
               alignment: Alignment.bottomRight,
               child: const Text(
@@ -24,6 +24,11 @@ class WelcomePage extends StatelessWidget {
                 textScaler: TextScaler.linear(0.75),
               ),
             ),
+          ),
+          Divider(),
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Text("Cette application utilise les APIs de doinsport.club"),
           ),
         ],
       ),
