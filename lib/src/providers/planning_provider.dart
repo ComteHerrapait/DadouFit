@@ -19,8 +19,12 @@ class PlanningProvider extends ChangeNotifier {
   late Future<ApiResponseWrapper<ClubPlayground>> _rawData;
 
   String get selectedDateStr => DateFormat('EEEE d').format(selectedDate);
-  String get selectionStr =>
-      "${selectedActivity.name} | ${selectedClub.name} | ${selectedDuration.inMinutes}min | $selectedDateStr";
+  String get selectionStr => [
+    selectedClub.name,
+    selectedActivity.name,
+    "${selectedDuration.inMinutes}min",
+    selectedDateStr,
+  ].join(" | ");
 
   Future<List<GenericSlot>> planningsFuture() {
     return _rawData.then(

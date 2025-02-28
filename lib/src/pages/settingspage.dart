@@ -3,16 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
-
-  @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
 
   @override
   Widget build(BuildContext context) {
@@ -45,33 +37,43 @@ class _SettingsPageState extends State<SettingsPage> {
               onPressed:
                   () => showDialog<String>(
                     context: context,
-                    builder:
-                        (BuildContext context) => Dialog(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                MaterialPicker(
-                                  pickerColor: pickerColor,
-                                  onColorChanged: settingsProvider.changeColor,
-                                ),
-                                const SizedBox(height: 15),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('Close'),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                    builder: (BuildContext context) => ColorPicker(),
                   ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ColorPicker extends StatelessWidget {
+  const ColorPicker({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settingsProvider = Provider.of<SettingsProvider>(context);
+
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            MaterialPicker(
+              pickerColor: settingsProvider.color,
+              onColorChanged: settingsProvider.changeColor,
+            ),
+            const SizedBox(height: 15),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        ),
       ),
     );
   }
