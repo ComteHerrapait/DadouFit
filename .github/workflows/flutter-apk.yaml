@@ -23,7 +23,6 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
-        # flutter-version: '3.22.2'
     
     - name: Install flutter dependencies
       run: flutter pub get
@@ -34,17 +33,28 @@ jobs:
     - name : Run static code analysis
       run: flutter analyze .
     
-    # Run widget tests for our flutter project.
-    # - run: flutter test # Disabled Tests
-    
     - name: Build release apk
       run: flutter build apk --release
     
     - name: Upload release apk to artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: dadoufit-release.apk
+        name: app-release.apk
         path: build/app/outputs/apk/release/app-release.apk
+
+    - name: Build IPA
+      run: flutter build ipa --no-codesign
+
+    - name: Compress IPA
+      run: |
+        cd build
+        tar -czf ios_build.tar.gz ios
+
+    - name: Upload IPA to artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios_build.tar.gz
+        path: build/ios_build.tar.gz
 
   release:
     needs: build
@@ -58,11 +68,17 @@ jobs:
         version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
         echo "APP_VERSION=$version" >> $GITHUB_ENV
 
-    - name: Download Artifact
+    - name: Download Artifact (Android)
       uses: actions/download-artifact@v4
       with:
-        name: dadoufit-release.apk  # Name of the uploaded artifact
-        path: ./artifacts   # Destination directory
+        name: app-release.apk 
+        path: ./artifacts
+
+    - name: Download Artifact (iOS)
+      uses: actions/download-artifact@v4
+      with:
+        name: ios_build.tar.gz 
+        path: ./artifacts
     
     - name: DEBUG List downloaded files
       run: ls -R ./artifacts
@@ -74,3 +90,4 @@ jobs:
         tag_name: v${{ env.APP_VERSION }}
         files: |
           ./artifacts/app-release.apk
+          ./artifacts/ios_build.tar.gz
