@@ -1,6 +1,7 @@
 name: Flutter CI
 
 on:
+  workflow_dispatch: # allows to manually run
   push:
     branches:
     - main
