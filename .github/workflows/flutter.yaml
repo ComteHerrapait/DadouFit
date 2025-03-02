@@ -56,7 +56,7 @@ jobs:
           APP_VERSION: ${{ needs.init.outputs.app_version }}
           APK_NAME: ${{ needs.init.outputs.apk_name }}
         with:
-          name: $APK_NAME
+          name: "$APK_NAME"
           path: build/app/outputs/apk/release/app-release.apk
 
   release:
@@ -71,7 +71,7 @@ jobs:
       - name: Download Artifact (Android)
         uses: actions/download-artifact@v4
         with:
-          name: $APK_NAME
+          name: "$APK_NAME"
           path: ./artifacts
         env: 
           APK_NAME: ${{ needs.init.outputs.apk_name }}
@@ -85,7 +85,7 @@ jobs:
           name: Release $APP_VERSION
           tag_name: v$APP_VERSION
           files: |
-            ./artifacts/$APK_NAME
+            "./artifacts/app-release.apk"
         env: 
           APP_VERSION: ${{ needs.init.outputs.app_version }}
           APK_NAME: ${{ needs.init.outputs.apk_name }}
