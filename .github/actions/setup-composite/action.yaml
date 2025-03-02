@@ -1,4 +1,4 @@
-name: "Init Tools"
+name: "Setup Tools"
 description: "Checkout + setup java + setup flutter"
 runs:
   using: composite
@@ -17,4 +17,5 @@ runs:
         channel: 'stable'
 
     - name: Install flutter dependencies
+      shell: bash
       run: flutter pub get

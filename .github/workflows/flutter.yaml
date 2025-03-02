@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: ./utils/checkout-and-setup
+        uses: ./.github/actions/setup-composite
       
       - name: Check for formatting issues
         run: dart format --set-exit-if-changed .
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: ./utils/checkout-and-setup
+        uses: ./.github/actions/setup-composite
 
       - name: Build release apk
         run: flutter build apk --release
