@@ -1,0 +1,20 @@
+name: "Init Tools"
+description: "Checkout + setup java + setup flutter"
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - name: Set Up Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'oracle'
+        java-version: '17'
+        cache: 'gradle'
+    
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+
+    - name: Install flutter dependencies
+      run: flutter pub get

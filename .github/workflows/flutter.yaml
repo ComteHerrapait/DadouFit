@@ -1,0 +1,90 @@
+name: Flutter CI
+
+on:
+  workflow_dispatch: # allows to manually run
+  push:
+    branches:
+    - main
+    - ci_test
+        
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.extract_app_version.outputs.app_version }}
+      apk_name: ${{ steps.extact_apk_name.outputs.apk_name }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract version from pubspec.yaml
+        id: extract_app_version
+        run: |
+          version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
+          echo "app_version=$version" >> $GITHUB_OUTPUT
+
+      - name: Build APK name
+        id: extact_apk_name
+        run: echo "apk_name=dadoufit-release-v$APP_VERSION.apk" >> $GITHUB_OUTPUT
+
+  analyze:
+    needs: init
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: ./utils/checkout-and-setup
+      
+      - name: Check for formatting issues
+        run: dart format --set-exit-if-changed .
+      
+      - name : Run static code analysis
+        run: flutter analyze .
+
+  build_apk:
+    needs: init
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: ./utils/checkout-and-setup
+
+      - name: Build release apk
+        run: flutter build apk --release
+
+      - name: Upload release apk to artifacts
+        uses: actions/upload-artifact@v4
+        env: 
+          APP_VERSION: ${{ needs.init.outputs.app_version }}
+          APK_NAME: ${{ needs.init.outputs.apk_name }}
+        with:
+          name: $APK_NAME
+          path: build/app/outputs/apk/release/app-release.apk
+
+  release:
+    needs: 
+      - init
+      - build_apk
+      - analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Artifact (Android)
+        uses: actions/download-artifact@v4
+        with:
+          name: $APK_NAME
+          path: ./artifacts
+        env: 
+          APK_NAME: ${{ needs.init.outputs.apk_name }}
+      
+      - name: DEBUG List downloaded files
+        run: ls -R ./artifacts
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release $APP_VERSION
+          tag_name: v$APP_VERSION
+          files: |
+            ./artifacts/$APK_NAME
+        env: 
+          APP_VERSION: ${{ needs.init.outputs.app_version }}
+          APK_NAME: ${{ needs.init.outputs.apk_name }}
+
