@@ -19,6 +19,11 @@ class GenericSlot {
   String get time => DateFormat('H:m').format(startTime);
   String get activityName => activity.name;
   String get clubName => club.name;
+  List<SlotPlayground> get availablePlaygrounds =>
+      playgrounds.where((p) => p.bookable).toList();
+  int get availablePlaygroundCount => availablePlaygrounds.length;
+  bool get isAnyBookable => availablePlaygroundCount > 0;
+  int get playgroundCount => playgrounds.length;
 }
 
 class SlotPlayground {

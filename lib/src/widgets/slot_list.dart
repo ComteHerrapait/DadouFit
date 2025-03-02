@@ -1,6 +1,7 @@
 import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
 import 'package:dadoufit/src/domains/generic_slot.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SlotList extends StatelessWidget {
   final List<GenericSlot> slots;
@@ -35,6 +36,11 @@ class SlotListElement extends StatelessWidget {
         playgrounds: slot.playgrounds,
         activity: slot.activity,
       ),
+      onTap:
+          () => showDialog<String>(
+            context: context,
+            builder: (context) => SlotDialog(slot: slot),
+          ),
     );
   }
 }
@@ -66,6 +72,65 @@ class SlotPlaygroundWidget extends StatelessWidget {
                 ),
               )
               .toList(),
+    );
+  }
+}
+
+class SlotDialog extends StatelessWidget {
+  final GenericSlot slot;
+
+  const SlotDialog({super.key, required this.slot});
+
+  Future<void> _openBookingPage(BuildContext context) async {
+    final Uri uri = slot.club.getSelectBookingUri(slot.activity);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch uri $uri');
+    }
+    if (context.mounted) {
+      Navigator.pop(context);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      icon: Text("Slot ${slot.time}"),
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // Reduce size to minimum
+          children: [
+            Text(
+              "Available Playgrounds : ${slot.availablePlaygroundCount}/${slot.playgroundCount}",
+            ),
+            SlotPlaygroundWidget(
+              playgrounds: slot.playgrounds,
+              activity: slot.activity,
+            ),
+            if (slot.isAnyBookable) ...[
+              Divider(),
+              Text(
+                "Work In Progress : link does not redirect to correct time on website",
+                textScaler: TextScaler.linear(0.7),
+                style: TextStyle(color: Colors.orangeAccent),
+              ),
+            ],
+          ],
+        ),
+      ),
+      actions: [
+        slot.isAnyBookable
+            ? TextButton(
+              onPressed: () => _openBookingPage(context),
+              child: Text("Go to booking page"),
+            )
+            : TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+      ],
     );
   }
 }
