@@ -26,18 +26,15 @@ class PlanningProvider extends ChangeNotifier {
     selectedDateStr,
   ].join(" | ");
 
-  Future<List<GenericSlot>> planningsFuture() {
-    return _rawData.then(
-      (apiResponse) => Future.value(
-        mapToGenericSlots(
-          apiResponse,
-          selectedClub,
-          selectedActivity,
-          selectedDate,
-          selectedDuration,
-        ),
-      ),
+  Future<List<GenericSlot>> planningsFuture() async {
+    final mappedData = mapToGenericSlots(
+      await _rawData,
+      selectedClub,
+      selectedActivity,
+      selectedDate,
+      selectedDuration,
     );
+    return mappedData;
   }
 
   PlanningProvider() {

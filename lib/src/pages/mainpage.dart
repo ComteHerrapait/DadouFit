@@ -34,13 +34,20 @@ class MainPageContent extends StatelessWidget {
           child: FutureBuilder(
             future: plannings.planningsFuture(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final List<GenericSlot> data = snapshot.data!;
-                return SlotList(slots: data);
-              } else if (snapshot.hasError) {
-                return Text('HTTP request KO :  ${snapshot.error}');
-              } else {
-                return Center(child: const CircularProgressIndicator());
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(child: const CircularProgressIndicator());
+                default:
+                  if (snapshot.hasError) {
+                    return Text('HTTP request KO : ${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    final List<GenericSlot> data = snapshot.data!;
+                    return SlotList(slots: data);
+                  } else {
+                    throw Exception(
+                      "Invalid State : not waiting, no data, no error $snapshot",
+                    );
+                  }
               }
             },
           ),
