@@ -24,6 +24,8 @@ jobs:
       - name: Build APK name
         id: extact_apk_name
         run: echo "apk_name=dadoufit-release-v$APP_VERSION.apk" >> $GITHUB_OUTPUT
+        env: 
+          APP_VERSION: ${{ steps.extract_app_version.outputs.app_version }}
 
   analyze:
     needs: init
