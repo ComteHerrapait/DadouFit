@@ -5,7 +5,6 @@ on:
   push:
     branches:
     - main
-    - ci_test
         
 jobs:
   init:
@@ -57,12 +56,6 @@ jobs:
         env: 
           APK_NAME: ${{ needs.init.outputs.apk_name }}
 
-      - name: DEBUG 
-        run: pwd 
-
-      - name: DEBUG 
-        run: ls -la 
-
       - name: Upload release apk to artifacts
         uses: actions/upload-artifact@v4
         env: 
@@ -88,9 +81,6 @@ jobs:
           path: ./artifacts
         env: 
           APK_NAME: ${{ needs.init.outputs.apk_name }}
-      
-      - name: DEBUG List downloaded files
-        run: ls -R ./artifacts
 
       - name: Create release
         uses: softprops/action-gh-release@v2
