@@ -98,7 +98,7 @@ jobs:
           name: Release ${{ env.APP_VERSION }}
           tag_name: v${{ env.APP_VERSION }}
           files: |
-            "./artifacts/${{ env.APK_NAME }}"
+            ./artifacts/${{ env.APK_NAME }}
         env: 
           APP_VERSION: ${{ needs.init.outputs.app_version }}
           APK_NAME: ${{ needs.init.outputs.apk_name }}
