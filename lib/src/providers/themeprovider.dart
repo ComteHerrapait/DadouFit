@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SettingsProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.dark;
   Color color = Color.fromARGB(125, 255, 50, 255);
+  Locale? locale; // null -> automatic detection
 
   SettingsProvider() {
     _init();
@@ -42,5 +43,10 @@ class SettingsProvider extends ChangeNotifier {
         seedColor: color,
       ),
     );
+  }
+
+  void changeLocale(Locale? newLocale) async {
+    locale = newLocale;
+    notifyListeners();
   }
 }

@@ -21,6 +21,8 @@ class DadouFitApp extends StatelessWidget {
         child: Builder(
           builder: (context) {
             final themeProvider = Provider.of<SettingsProvider>(context);
+            final settingsProvider = Provider.of<SettingsProvider>(context);
+
             return MaterialApp(
               title: 'DadouFit',
               theme: themeProvider.theme(),
@@ -31,6 +33,7 @@ class DadouFitApp extends StatelessWidget {
               ),
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
+              locale: settingsProvider.locale,
             );
           },
         ),

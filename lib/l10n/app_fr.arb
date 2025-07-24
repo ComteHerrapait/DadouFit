@@ -3,5 +3,15 @@
   "welcomeFitBoy": "Bienvenue, FitBoy !",
   "filterLabel": "Filtres",
   "doinsportApiWarning": "Cette application utilise les APIs de doinsport.club",
-  "generatedByDallE": "générée avec DALL·E"
+  "generatedByDallE": "générée avec DALL·E",
+  "defaultValue": "valeur par défaut",
+
+  "settingsTitle": "Réglages",
+  "settingsDarkMode": "Mode sombre",
+  "settingsColor": "Couleur",
+  "settingsColorPick": "Choisir couleur",
+  "settingsLocale": "Langue",
+
+  "close": "Fermer",
+  "open": "Ouvrir"
 }
