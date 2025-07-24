@@ -61,16 +61,15 @@ List<GenericSlot> mapToGenericSlots(
   }
 
   slotOrganizer.forEach((time, slots) {
-    final playgrounds =
-        slots
-            .map(
-              (slot) => SlotPlayground(
-                bookable: slot.bookable,
-                duration: slot.duration,
-                playgroundName: slot.playgroundName,
-              ),
-            )
-            .toList();
+    final playgrounds = slots
+        .map(
+          (slot) => SlotPlayground(
+            bookable: slot.bookable,
+            duration: slot.duration,
+            playgroundName: slot.playgroundName,
+          ),
+        )
+        .toList();
     playgrounds.sort((a, b) => a.playgroundName.compareTo(b.playgroundName));
     genericSlots.add(
       GenericSlot(

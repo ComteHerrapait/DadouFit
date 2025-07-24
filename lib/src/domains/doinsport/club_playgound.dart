@@ -19,8 +19,9 @@ class ClubPlayground {
 
   factory ClubPlayground.fromJson(Map<String, dynamic> json) {
     final rawActivities = json['activities'] as List;
-    List<Activity> activities =
-        rawActivities.map((item) => Activity.fromJson(item)).toList();
+    List<Activity> activities = rawActivities
+        .map((item) => Activity.fromJson(item))
+        .toList();
 
     return ClubPlayground(
       id: json['id'],

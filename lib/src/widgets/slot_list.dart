@@ -36,11 +36,10 @@ class SlotListElement extends StatelessWidget {
         playgrounds: slot.playgrounds,
         activity: slot.activity,
       ),
-      onTap:
-          () => showDialog<String>(
-            context: context,
-            builder: (context) => SlotDialog(slot: slot),
-          ),
+      onTap: () => showDialog<String>(
+        context: context,
+        builder: (context) => SlotDialog(slot: slot),
+      ),
     );
   }
 }
@@ -60,18 +59,17 @@ class SlotPlaygroundWidget extends StatelessWidget {
     return Flex(
       direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children:
-          playgrounds
-              .map(
-                (p) => Tooltip(
-                  message: p.playgroundName,
-                  child: Icon(
-                    activity.icon,
-                    color: p.bookable ? Colors.green : Colors.red,
-                  ),
-                ),
-              )
-              .toList(),
+      children: playgrounds
+          .map(
+            (p) => Tooltip(
+              message: p.playgroundName,
+              child: Icon(
+                activity.icon,
+                color: p.bookable ? Colors.green : Colors.red,
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
@@ -121,15 +119,15 @@ class SlotDialog extends StatelessWidget {
       actions: [
         slot.isAnyBookable
             ? TextButton(
-              onPressed: () => _openBookingPage(context),
-              child: Text("Go to booking page"),
-            )
+                onPressed: () => _openBookingPage(context),
+                child: Text("Go to booking page"),
+              )
             : TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Close'),
-            ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Close'),
+              ),
       ],
     );
   }

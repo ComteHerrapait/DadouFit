@@ -105,29 +105,27 @@ class _PlanningSelectorsState extends State<PlanningSelectors> {
                 children: [
                   DropdownMenu<EnumClub>(
                     initialSelection: planningProvider.selectedClub,
-                    dropdownMenuEntries:
-                        EnumClub.values
-                            .map(
-                              (EnumClub club) => DropdownMenuEntry<EnumClub>(
-                                value: club,
-                                label: club.name,
-                              ),
-                            )
-                            .toList(),
+                    dropdownMenuEntries: EnumClub.values
+                        .map(
+                          (EnumClub club) => DropdownMenuEntry<EnumClub>(
+                            value: club,
+                            label: club.name,
+                          ),
+                        )
+                        .toList(),
                     onSelected: planningProvider.selectClub,
                   ),
                   DropdownMenu<EnumActivity>(
                     initialSelection: planningProvider.selectedActivity,
-                    dropdownMenuEntries:
-                        EnumActivity.values
-                            .map(
-                              (EnumActivity activity) =>
-                                  DropdownMenuEntry<EnumActivity>(
-                                    value: activity,
-                                    label: activity.name,
-                                  ),
-                            )
-                            .toList(),
+                    dropdownMenuEntries: EnumActivity.values
+                        .map(
+                          (EnumActivity activity) =>
+                              DropdownMenuEntry<EnumActivity>(
+                                value: activity,
+                                label: activity.name,
+                              ),
+                        )
+                        .toList(),
                     onSelected: planningProvider.selectActivity,
                   ),
                   DropdownMenu<Duration>(
