@@ -65,6 +65,27 @@ jobs:
           name: ${{ env.APK_NAME }}
           path: build/app/outputs/apk/release/${{ env.APK_NAME }}
 
+  build_web:
+    needs: init
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup-composite
+
+      - name: Build release web
+        run: flutter build web --release
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build/web'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
   release:
     needs: 
       - init
