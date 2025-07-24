@@ -36,11 +36,10 @@ class SettingsPage extends StatelessWidget {
             title: Text(context.translations.settingsColor),
             trailing: ElevatedButton(
               child: Text(context.translations.settingsColorPick),
-              onPressed:
-                  () => showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => ColorPicker(),
-                  ),
+              onPressed: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => ColorPicker(),
+              ),
             ),
           ),
           ListTile(
