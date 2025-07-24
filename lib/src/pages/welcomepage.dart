@@ -1,4 +1,4 @@
-import 'package:dadoufit/src/utils/ContextExtension.dart';
+import 'package:dadoufit/src/utils/build_context_extension.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {

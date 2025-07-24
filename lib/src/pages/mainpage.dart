@@ -2,7 +2,7 @@ import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
 import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
 import 'package:dadoufit/src/domains/generic_slot.dart';
 import 'package:dadoufit/src/providers/planning_provider.dart';
-import 'package:dadoufit/src/utils/ContextExtension.dart';
+import 'package:dadoufit/src/utils/build_context_extension.dart';
 import 'package:dadoufit/src/widgets/slot_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
