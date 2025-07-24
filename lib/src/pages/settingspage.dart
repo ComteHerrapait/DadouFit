@@ -1,6 +1,8 @@
 import 'package:dadoufit/src/providers/themeprovider.dart';
+import 'package:dadoufit/src/utils/ContextExtension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -17,9 +19,9 @@ class SettingsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Center(child: const Text("Settings")),
+          Center(child: Text(context.translations.settingsTitle)),
           ListTile(
-            title: const Text("DarkMode"),
+            title: Text(context.translations.settingsDarkMode),
             trailing: Checkbox(
               value: settingsProvider.isDarkMode,
               onChanged: (v) {
@@ -31,14 +33,33 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text("Color"),
+            title: Text(context.translations.settingsColor),
             trailing: ElevatedButton(
-              child: const Text('Pick Color'),
+              child: Text(context.translations.settingsColorPick),
               onPressed:
                   () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => ColorPicker(),
                   ),
+            ),
+          ),
+          ListTile(
+            title: Text(context.translations.settingsLocale),
+            trailing: DropdownButton<Locale?>(
+              value: settingsProvider.locale,
+              items: [
+                DropdownMenuItem<Locale?>(
+                  value: null,
+                  child: Text(context.translations.defaultValue),
+                ),
+                ...AppLocalizations.supportedLocales.map((locale) {
+                  return DropdownMenuItem<Locale?>(
+                    value: locale,
+                    child: Text(locale.languageCode.toUpperCase()),
+                  );
+                }),
+              ],
+              onChanged: settingsProvider.changeLocale,
             ),
           ),
         ],
@@ -70,7 +91,7 @@ class ColorPicker extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Close'),
+              child: Text(context.translations.close),
             ),
           ],
         ),

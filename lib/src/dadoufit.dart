@@ -4,6 +4,7 @@ import 'package:dadoufit/src/pages/welcomepage.dart';
 import 'package:dadoufit/src/pages/wrapper.dart';
 import 'package:dadoufit/src/providers/themeprovider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class DadouFitApp extends StatelessWidget {
@@ -20,6 +21,8 @@ class DadouFitApp extends StatelessWidget {
         child: Builder(
           builder: (context) {
             final themeProvider = Provider.of<SettingsProvider>(context);
+            final settingsProvider = Provider.of<SettingsProvider>(context);
+
             return MaterialApp(
               title: 'DadouFit',
               theme: themeProvider.theme(),
@@ -28,6 +31,9 @@ class DadouFitApp extends StatelessWidget {
                 mainpage: MainPage(),
                 settingspage: SettingsPage(),
               ),
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              locale: settingsProvider.locale,
             );
           },
         ),
