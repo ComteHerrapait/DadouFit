@@ -1,8 +1,8 @@
+import 'package:dadoufit/l10n/app_localizations.dart';
 import 'package:dadoufit/src/providers/themeprovider.dart';
 import 'package:dadoufit/src/utils/ContextExtension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -36,10 +36,11 @@ class SettingsPage extends StatelessWidget {
             title: Text(context.translations.settingsColor),
             trailing: ElevatedButton(
               child: Text(context.translations.settingsColorPick),
-              onPressed: () => showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => ColorPicker(),
-              ),
+              onPressed:
+                  () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => ColorPicker(),
+                  ),
             ),
           ),
           ListTile(
