@@ -1,11 +1,19 @@
-import 'dart:js_interop';
+import 'dart:ui';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:dadoufit/src/js/js_interface.dart';
 
-@JS('setMetaThemeColor')
-external void setMetaThemeColor(JSString message);
+import 'js_fake.dart' if (dart.library.html) 'js_real.dart';
 
-void setMetaThemeColorWrapper(Color newColor) {
-  setMetaThemeColor(newColor.toHexString.toString().toJS);
+export 'js_interface.dart';
+
+// The goal of this technic is to avoid import javascript-specific code into other builds.
+// The conditionnal import allows to import a JavascriptImplementation or the other according to context.
+class Javascript {
+  final JavascriptInterface _impl;
+
+  Javascript() : _impl = JavascriptImplementation();
+
+  void setMetaThemeColor(Color color) {
+    _impl.setMetaThemeColor(color);
+  }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dadoufit/src/js/javascript.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +6,7 @@ class SettingsProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.dark;
   Color color = Color.fromARGB(125, 255, 50, 255);
   Locale? locale; // null -> automatic detection
+  final js = Javascript();
 
   SettingsProvider() {
     _init();
@@ -33,8 +32,7 @@ class SettingsProvider extends ChangeNotifier {
 
   void changeColor(Color newColor) async {
     color = newColor;
-    log("changing the color");
-    setMetaThemeColorWrapper(theme().primaryColor);
+    js.setMetaThemeColor(theme().primaryColor);
     notifyListeners();
   }
 
