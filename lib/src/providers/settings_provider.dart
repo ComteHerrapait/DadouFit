@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:dadoufit/src/js/javascript.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +33,8 @@ class SettingsProvider extends ChangeNotifier {
 
   void changeColor(Color newColor) async {
     color = newColor;
+    log("changing the color");
+    setMetaThemeColorWrapper(theme().primaryColor);
     notifyListeners();
   }
 

@@ -1,5 +1,5 @@
 import 'package:dadoufit/l10n/app_localizations.dart';
-import 'package:dadoufit/src/providers/themeprovider.dart';
+import 'package:dadoufit/src/providers/settings_provider.dart';
 import 'package:dadoufit/src/utils/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
