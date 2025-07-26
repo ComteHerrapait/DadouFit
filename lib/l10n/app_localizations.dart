@@ -164,6 +164,12 @@ abstract class AppLocalizations {
   /// **'Version'**
   String get settingsVersion;
 
+  /// No description provided for @settingsPwaInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to home screen'**
+  String get settingsPwaInstall;
+
   /// No description provided for @close.
   ///
   /// In en, this message translates to:

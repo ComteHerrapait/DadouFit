@@ -12,6 +12,7 @@
   "settingsColorPick": "Choisir couleur",
   "settingsLocale": "Langue",
   "settingsVersion": "Version",
+  "settingsPwaInstall": "Ajouter à l'écran d'accueil",
 
   "close": "Fermer",
   "open": "Ouvrir"

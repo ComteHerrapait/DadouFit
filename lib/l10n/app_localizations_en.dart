@@ -43,6 +43,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsVersion => 'Version';
 
   @override
+  String get settingsPwaInstall => 'Add to home screen';
+
+  @override
   String get close => 'Close';
 
   @override

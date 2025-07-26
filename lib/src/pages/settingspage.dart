@@ -1,10 +1,12 @@
 import 'package:dadoufit/l10n/app_localizations.dart';
 import 'package:dadoufit/src/providers/settings_provider.dart';
 import 'package:dadoufit/src/utils/build_context_extension.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:pwa_install/pwa_install.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -12,6 +14,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
+    final pwa = PWAInstall();
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -62,6 +65,16 @@ class SettingsPage extends StatelessWidget {
               onChanged: settingsProvider.changeLocale,
             ),
           ),
+          if (kIsWeb)
+            ListTile(
+              title: Text(context.translations.settingsPwaInstall),
+              trailing: pwa.installPromptEnabled
+                  ? IconButton(
+                      onPressed: () => pwa.promptInstall_(),
+                      icon: Icon(Icons.add_to_home_screen),
+                    )
+                  : Icon(Icons.file_download_off),
+            ),
           ListTile(
             title: Text(context.translations.settingsVersion),
             trailing: FutureBuilder(

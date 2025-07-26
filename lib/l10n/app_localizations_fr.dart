@@ -43,6 +43,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsVersion => 'Version';
 
   @override
+  String get settingsPwaInstall => 'Ajouter à l\'écran d\'accueil';
+
+  @override
   String get close => 'Fermer';
 
   @override
