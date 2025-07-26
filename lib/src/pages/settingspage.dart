@@ -3,6 +3,7 @@ import 'package:dadoufit/src/providers/settings_provider.dart';
 import 'package:dadoufit/src/utils/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -59,6 +60,15 @@ class SettingsPage extends StatelessWidget {
                 }),
               ],
               onChanged: settingsProvider.changeLocale,
+            ),
+          ),
+          ListTile(
+            title: Text(context.translations.settingsVersion),
+            trailing: FutureBuilder(
+              future: PackageInfo.fromPlatform(),
+              builder: (context, asyncSnapshot) {
+                return Text(asyncSnapshot.data?.version ?? "Unknown");
+              },
             ),
           ),
         ],

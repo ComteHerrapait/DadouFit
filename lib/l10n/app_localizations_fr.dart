@@ -40,6 +40,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsLocale => 'Langue';
 
   @override
+  String get settingsVersion => 'Version';
+
+  @override
   String get close => 'Fermer';
 
   @override

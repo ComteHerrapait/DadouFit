@@ -11,6 +11,7 @@
   "settingsColor": "Color",
   "settingsColorPick": "Pick a color",
   "settingsLocale": "Language",
+  "settingsVersion": "Version",
 
   "close": "Close",
   "open": "Open"

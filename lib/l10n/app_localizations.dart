@@ -158,6 +158,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get settingsLocale;
 
+  /// No description provided for @settingsVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get settingsVersion;
+
   /// No description provided for @close.
   ///
   /// In en, this message translates to:

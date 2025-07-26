@@ -40,6 +40,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLocale => 'Language';
 
   @override
+  String get settingsVersion => 'Version';
+
+  @override
   String get close => 'Close';
 
   @override
