@@ -1,5 +1,5 @@
 {
-    "name": "dadoufit",
+    "name": "DadouFit",
     "short_name": "dadoufit",
     "start_url": ".",
     "display": "standalone",
@@ -10,24 +10,35 @@
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/Icon-192.png",
-            "sizes": "192x192",
+            "src": "icons/dadoufit-v1-zoom-256.png",
+            "sizes": "256x256",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-512.png",
+            "src": "icons/dadoufit-v1-zoom-512.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-maskable-192.png",
-            "sizes": "192x192",
+            "src": "icons/dadoufit-v1-zoom-1024.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/dadoufit-v1-maskable-256.png",
+            "sizes": "256x256",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/Icon-maskable-512.png",
+            "src": "icons/dadoufit-v1-maskable-512.png",
             "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/dadoufit-v1-maskable-1024.png",
+            "sizes": "1024x1024",
             "type": "image/png",
             "purpose": "maskable"
         }
