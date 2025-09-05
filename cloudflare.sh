@@ -17,4 +17,4 @@ flutter/bin/flutter precache --web
 
 echo "FLUTTER IS SET UP"
 
-flutter/bin/flutter build web --web-renderer html --base-href="/" --release
+flutter/bin/flutter build web --base-href="/" --release
