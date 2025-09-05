@@ -1,4 +1,4 @@
-set -e
+set -e # Fail Fast
 
 if [ -d flutter ]; then
   (cd flutter && git pull)
