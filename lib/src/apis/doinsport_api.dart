@@ -8,7 +8,9 @@ import 'package:dadoufit/src/domains/doinsport/enum_club.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-const String hostDoinsportV3 = "api-v3.doinsport.club";
+// This is a simple Cloudflare worker that we use as a bounce to avoid CORS errors
+// The real server is at api-v3.doinsport.club
+const String hostDoinsportV3 = "doinsport.leondecheux.workers.dev";
 
 Future<ApiResponseWrapper<ClubPlayground>> getPlaygroundPlannings(
   DateTime date,
