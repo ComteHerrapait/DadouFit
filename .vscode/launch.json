@@ -15,8 +15,8 @@
             "request": "launch",
             "program": "lib/main.dart",
             "args": [
-                "-d",
-                "web-server"
+                "-d", "chrome",
+                "--web-port", "8042"
             ]
         },
         {
