@@ -18,16 +18,21 @@ class ClubPlayground {
   });
 
   factory ClubPlayground.fromJson(Map<String, dynamic> json) {
-    final rawActivities = json['activities'] as List;
-    List<Activity> activities = rawActivities
-        .map((item) => Activity.fromJson(item))
-        .toList();
+    final rawActivities = json['activities'];
+
+    // sometimes the doinsport API responds with a map instead of a list
+    final activitiesList = rawActivities is Map
+        ? rawActivities.values.toList()
+        : rawActivities as List;
+
+    final mappedActivities =
+        activitiesList.map((item) => Activity.fromJson(item)).toList();
 
     return ClubPlayground(
       id: json['id'],
       name: json['name'],
       indoor: json['indoor'],
-      activities: activities,
+      activities: mappedActivities,
       openingTime: json['timetables']['startAt'],
       closingTime: json['timetables']['endAt'],
     );
