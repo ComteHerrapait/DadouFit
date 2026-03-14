@@ -41,7 +41,7 @@ dependencies:
   url_launcher: ^6.3.1
   flutter_localizations:
     sdk: flutter
-  package_info_plus: ^8.3.0
+  package_info_plus: ^9.0.0
   pwa_install: ^0.0.6
 
 dev_dependencies:
