@@ -63,9 +63,9 @@ class SlotPlaygroundWidget extends StatelessWidget {
           .map(
             (p) => Tooltip(
               message: p.playgroundName,
-              child: Icon(
-                activity.icon,
-                color: p.bookable ? Colors.green : Colors.red,
+              child: PlaygroundAvailabilityIcon(
+                icon: activity.icon,
+                isAvailable: p.bookable,
               ),
             ),
           )
@@ -128,6 +128,45 @@ class SlotDialog extends StatelessWidget {
                 },
                 child: const Text('Close'),
               ),
+      ],
+    );
+  }
+}
+
+class PlaygroundAvailabilityIcon extends StatelessWidget {
+  final IconData icon;
+  final double size;
+  final bool isAvailable;
+
+  const PlaygroundAvailabilityIcon({
+    super.key,
+    required this.icon,
+    required this.isAvailable,
+    this.size = 50,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Icon(icon, size: size, color: isAvailable ? Colors.green : Colors.grey),
+        Positioned(
+          right: 0,
+          bottom: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: isAvailable ? Colors.green : Colors.red,
+              shape: BoxShape.circle,
+            ),
+            padding: const EdgeInsets.all(2),
+            child: Icon(
+              isAvailable ? Icons.check : Icons.close,
+              size: size * 0.4,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ],
     );
   }
