@@ -25,8 +25,9 @@ class ClubPlayground {
         ? rawActivities.values.toList()
         : rawActivities as List;
 
-    final mappedActivities =
-        activitiesList.map((item) => Activity.fromJson(item)).toList();
+    final mappedActivities = activitiesList
+        .map((item) => Activity.fromJson(item))
+        .toList();
 
     return ClubPlayground(
       id: json['id'],
