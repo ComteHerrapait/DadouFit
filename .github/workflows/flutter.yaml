@@ -57,7 +57,7 @@ jobs:
           APK_NAME: ${{ needs.init.outputs.apk_name }}
 
       - name: Upload release apk to artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         env: 
           APP_VERSION: ${{ needs.init.outputs.app_version }}
           APK_NAME: ${{ needs.init.outputs.apk_name }}
