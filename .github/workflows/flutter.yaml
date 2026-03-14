@@ -13,7 +13,7 @@ jobs:
       app_version: ${{ steps.extract_app_version.outputs.app_version }}
       apk_name: ${{ steps.extact_apk_name.outputs.apk_name }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Extract version from pubspec.yaml
         id: extract_app_version
         run: |
@@ -30,7 +30,7 @@ jobs:
     needs: init
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup-composite
       
@@ -44,7 +44,7 @@ jobs:
     needs: init
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup-composite
 
@@ -73,7 +73,7 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup-composite
 
@@ -97,7 +97,7 @@ jobs:
       - analyze
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download Artifact (Android)
         uses: actions/download-artifact@v4
