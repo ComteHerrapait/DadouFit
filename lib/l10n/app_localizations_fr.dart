@@ -34,6 +34,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsColor => 'Couleur';
 
   @override
+  String get settingsColorblind => 'Mode daltonien';
+
+  @override
   String get settingsColorPick => 'Choisir couleur';
 
   @override

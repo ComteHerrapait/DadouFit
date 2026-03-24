@@ -3,6 +3,7 @@ import 'package:dadoufit/src/pages/mainpage.dart';
 import 'package:dadoufit/src/pages/settingspage.dart';
 import 'package:dadoufit/src/pages/welcomepage.dart';
 import 'package:dadoufit/src/pages/wrapper.dart';
+import 'package:dadoufit/src/providers/colors_provider.dart';
 import 'package:dadoufit/src/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,17 +16,19 @@ class DadouFitApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
+        ProxyProvider<SettingsProvider, ColorsProvider>(
+          update: (_, settingsProvider, _) => ColorsProvider(settingsProvider),
+        ),
       ],
       child: DefaultTabController(
         length: 3,
         child: Builder(
           builder: (context) {
-            final themeProvider = Provider.of<SettingsProvider>(context);
             final settingsProvider = Provider.of<SettingsProvider>(context);
 
             return MaterialApp(
               title: 'DadouFit',
-              theme: themeProvider.theme(),
+              theme: settingsProvider.theme(),
               home: const Wrapper(
                 welcomepage: WelcomePage(),
                 mainpage: MainPage(),

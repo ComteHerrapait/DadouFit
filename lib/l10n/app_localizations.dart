@@ -146,6 +146,12 @@ abstract class AppLocalizations {
   /// **'Color'**
   String get settingsColor;
 
+  /// No description provided for @settingsColorblind.
+  ///
+  /// In en, this message translates to:
+  /// **'Colorblind Mode'**
+  String get settingsColorblind;
+
   /// No description provided for @settingsColorPick.
   ///
   /// In en, this message translates to:

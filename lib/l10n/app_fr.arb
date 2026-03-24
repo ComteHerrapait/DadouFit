@@ -9,6 +9,7 @@
   "settingsTitle": "Réglages",
   "settingsDarkMode": "Mode sombre",
   "settingsColor": "Couleur",
+  "settingsColorblind": "Mode daltonien",
   "settingsColorPick": "Choisir couleur",
   "settingsLocale": "Langue",
   "settingsVersion": "Version",

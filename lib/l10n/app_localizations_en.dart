@@ -34,6 +34,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsColor => 'Color';
 
   @override
+  String get settingsColorblind => 'Colorblind Mode';
+
+  @override
   String get settingsColorPick => 'Pick a color';
 
   @override

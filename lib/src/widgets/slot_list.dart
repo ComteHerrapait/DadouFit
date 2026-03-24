@@ -1,6 +1,9 @@
 import 'package:dadoufit/src/domains/doinsport/enum_activity.dart';
 import 'package:dadoufit/src/domains/generic_slot.dart';
+import 'package:dadoufit/src/providers/colors_provider.dart';
+import 'package:dadoufit/src/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SlotList extends StatelessWidget {
@@ -147,27 +150,48 @@ class PlaygroundAvailabilityIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Icon(icon, size: size, color: isAvailable ? Colors.green : Colors.grey),
-        Positioned(
-          right: 0,
-          bottom: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              color: isAvailable ? Colors.green : Colors.red,
-              shape: BoxShape.circle,
-            ),
-            padding: const EdgeInsets.all(2),
-            child: Icon(
-              isAvailable ? Icons.check : Icons.close,
-              size: size * 0.4,
-              color: Colors.white,
-            ),
-          ),
+    final colorsProvider = Provider.of<ColorsProvider>(context);
+
+    Color iconColor(bool available) {
+      return available
+          ? colorsProvider.colorAvailableForeground()
+          : colorsProvider.colorUnavailableForeground();
+    }
+
+    Color iconBgColor(bool available) {
+      return available
+          ? colorsProvider.colorAvailableBackground()
+          : colorsProvider.colorUnavailableBackground();
+    }
+
+    return MultiProvider(
+      providers: [
+        ProxyProvider<SettingsProvider, ColorsProvider>(
+          update: (_, settingsProvider, _) => ColorsProvider(settingsProvider),
         ),
       ],
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Icon(icon, size: size, color: iconBgColor(isAvailable)),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: iconColor(isAvailable),
+                shape: BoxShape.circle,
+              ),
+              padding: const EdgeInsets.all(2),
+              child: Icon(
+                isAvailable ? Icons.check : Icons.close,
+                size: size * 0.4,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

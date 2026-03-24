@@ -37,6 +37,18 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           ListTile(
+            title: Text(context.translations.settingsColorblind),
+            trailing: Checkbox(
+              value: settingsProvider.isColorblind,
+              onChanged: (v) {
+                if (v == null) return;
+                settingsProvider.changeColorblindMode(
+                  v ? ColorblindMode.colorblind : ColorblindMode.normal,
+                );
+              },
+            ),
+          ),
+          ListTile(
             title: Text(context.translations.settingsColor),
             trailing: ElevatedButton(
               child: Text(context.translations.settingsColorPick),

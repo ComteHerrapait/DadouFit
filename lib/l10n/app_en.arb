@@ -9,6 +9,7 @@
   "settingsTitle": "Settings",
   "settingsDarkMode": "Dark mode",
   "settingsColor": "Color",
+  "settingsColorblind": "Colorblind Mode",
   "settingsColorPick": "Pick a color",
   "settingsLocale": "Language",
   "settingsVersion": "Version",

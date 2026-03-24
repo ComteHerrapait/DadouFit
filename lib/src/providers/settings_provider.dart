@@ -6,10 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+enum ColorblindMode {
+  normal(key: "normal"),
+  colorblind(key: "colorblind");
+
+  const ColorblindMode({required this.key});
+  final String key;
+}
+
 enum PersistedSettings {
   darkMode(key: "darkmode_enabled"),
   locale(key: "locale"),
-  color(key: "theme_seed_color");
+  color(key: "theme_seed_color"),
+  colorBlindness(key: "colorblindness");
 
   const PersistedSettings({required this.key});
   final String key;
@@ -22,6 +31,7 @@ class SettingsProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.dark;
   Color color = Color.fromARGB(125, 255, 50, 255);
   Locale? locale; // null -> automatic detection
+  ColorblindMode colorblindMode = ColorblindMode.normal;
 
   SettingsProvider() {
     _init();
@@ -33,6 +43,7 @@ class SettingsProvider extends ChangeNotifier {
     _loadDarkModeFromPrefs();
     _loadLocaleFromPrefs();
     _loadColorFromPrefs();
+    _loadColorblindnessFromPrefs();
 
     notifyListeners();
   }
@@ -72,6 +83,20 @@ class SettingsProvider extends ChangeNotifier {
     }
   }
 
+  void _loadColorblindnessFromPrefs() {
+    String? colorblindnessCode = prefs.getString(
+      PersistedSettings.colorBlindness.key,
+    );
+
+    if (colorblindnessCode != null && colorblindnessCode.isNotEmpty) {
+      ColorblindMode? fromPrefs = ColorblindMode.values
+          .asNameMap()[colorblindnessCode];
+      if (fromPrefs != null) {
+        colorblindMode = fromPrefs;
+      }
+    }
+  }
+
   // Public methods to change preferences values
 
   void changeTheme(ThemeMode newTheme) async {
@@ -97,9 +122,16 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeColorblindMode(ColorblindMode newColorblindMode) async {
+    colorblindMode = newColorblindMode;
+    prefs.setString(PersistedSettings.colorBlindness.key, colorblindMode.key);
+    notifyListeners();
+  }
+
   // Public getters to read preferences values
 
   bool get isDarkMode => themeMode == ThemeMode.dark;
+  bool get isColorblind => colorblindMode == ColorblindMode.colorblind;
   Brightness get brightness =>
       themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light;
   ThemeData theme() {
